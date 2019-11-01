@@ -60,7 +60,7 @@ function updateCanvas(){
   //
   // creer un nouvel obstacle (requin) toutes les 120 frames
   function updateObstacles() {
-
+    frames++;
     //if (/* je suis sur un multiple de 120e frame */) {
       // je crée un nouvel obstacle
     if (frames % 120 === 0) {
@@ -83,6 +83,7 @@ function updateCanvas(){
 function startGame() {
   // je lance la boucle d'animation
   player = new Player();
+  //obstacles = new Obstacles(); est-ce qu'il y a besoin de l'ajouter ici ?
   window.requestAnimationFrame(updateCanvas);
 }
 

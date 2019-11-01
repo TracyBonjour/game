@@ -1,18 +1,20 @@
-function random(from, to) {
-    return Math.floor(from + Math.random()*(to - from));
-}
+//function random(from, to) {
+ //   return Math.floor(from + Math.random()*(to - from));
+//}
 
 class Obstacles {
     constructor() {
         const img = document.createElement('img');
         img.onload = () => {
             this.img = img;
+
+            const imgRatio = img.naturalWidth/img.naturalHeight;
             
-            this.w = random(W/3, 2/3*W);
-            this.h = 100;
+            this.w = 200;
+            this.h = this.w/imgRatio; 
     
-            this.x = random(0, W-this.w);
-            this.y = -this.h;
+            this.x = W/3-this.w/1;
+            this.y = H-this.h-100;
         }
         img.src = "./monjeuimage/shark2.png";
     }
