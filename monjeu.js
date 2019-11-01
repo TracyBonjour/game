@@ -17,12 +17,12 @@ document.getElementById("start-button").onclick = function() {
 };
 
 var img = new Image();
-img.src = "./monjeuimage/bg.jpeg";
+img.src = "./monjeuimage/bg.jpg";
 
 var backgroundImage = {
   img: img,
   x: 0,
-  speed: -1,
+  speed: -2,
 
   move: function() {
     console.log('move');
@@ -59,13 +59,24 @@ function updateCanvas(){
 
   //
   // creer un nouvel obstacle (requin) toutes les 120 frames
+  function updateObstacles() {
+
+    //if (/* je suis sur un multiple de 120e frame */) {
+      // je crée un nouvel obstacle
+    if (frames % 120 === 0) {
+      var obstacles = new Obstacles();
+      obstacles.push(obstacles);
+    }
+    // je le trace 
+    obstacles.forEach(function(obstacles)){
+      obstacles.y += 5;
+      obstacles.draw();
+    }
+  }
+
+  updateObstacles();
   //
-
-  //if (/* je suis sur un multiple de 120e frame */) {
-    // je crée un nouvel obstacle
-
-    // je le trace }//
-  
+   
   window.requestAnimationFrame(updateCanvas);
 }
 

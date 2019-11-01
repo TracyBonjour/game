@@ -1,3 +1,12 @@
+#page2 {
+  margin: 0;
+  padding: 0;
+}
+
+#game-board {
+  background-size: cover; /*zoom taille de la page?*/
+}
+
 section {
   display: none;
 }
@@ -7,10 +16,10 @@ section.active {
 }
 
 canvas {
-  border: 1px solid red;
+  border: 1px solid white;
 }
 
-body {
+#page1 {
   padding: 0 15%;
   text-align: center;
 }
@@ -29,12 +38,4 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin: 20px 0px;
-}
-
-#game-board {
-  padding-top: 12vh; 
-}
-
-#title {
-  padding: 20% 0;
 }
