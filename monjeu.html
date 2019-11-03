@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mon jeu</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-  <section class="active" id="page1">
-    <div class="title">
-      <img src="./monjeuimage/logo.jpg" alt="" class="logo-img">
-      <br>
-      <button id="start-button">Start Game</button>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mon jeu</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="active" id="page1">
+      <div class="title">
+        <img src="./monjeuimage/logo.jpg" alt="" class="logo-img" />
+        <br />
+        <button id="start-button">Start Game</button>
+      </div>
     </div>
-  </section>
 
-  <!-- <section class="active">
+    <!-- <section class="active">
     <div>
       <h1>Appuyez et maintenez pour sauter !</h1>
     </div>
   </section> -->
 
-  <section id="page2">
-    <div id="game-board">
-      <canvas id="canvas" width="1177" height="750"></canvas>
+    <div id="page2">
+      <div id="game-board">
+        <canvas id="canvas" width="1177" height="750"></canvas>
+      </div>
     </div>
-  </section>
 
-  <section>
-    <div id="gagné">
-      <h1>Bravo !</h1>
+    <div>
+      <div id="gagné">
+        <h1>Bravo !</h1>
+      </div>
     </div>
-  </section>
 
-  <section>
-    <div id="perdu">
-      <h1>Perdu !</h1>
-      <button id="start-deuxieme">Essayez encore</button>
+    <div>
+      <div id="perdu">
+        <h1>Perdu !</h1>
+        <button id="start-deuxieme">Essayez encore</button>
+      </div>
     </div>
-  </section>
-  <script src="player.js"></script>
-  <script src="obstacle.js"></script>
-  <script src="monjeu.js"></script>
-</body>
+    <script src="background.js"></script>
+    <script src="player.js"></script>
+    <script src="obstacle.js"></script>
+    <script src="monjeu.js"></script>
+  </body>
 </html>

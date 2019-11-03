@@ -1,89 +1,101 @@
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
+//Déclaration des variables
+var frames = 0;
+var background; 
+var player;
+var obstacles;
+//var gameover;
+//var points;
+
+//Déclaration du Canvas
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 
 var W = canvas.width;
 var H = canvas.height;
 
-var frames = 0;
-var player;
+//Function draw
+function draw() {
+  ctx.clearRect(0, 0, W, H);
 
-var obstacles = [];
-
-document.getElementById("start-button").onclick = function() {
-  document.getElementById("page1").classList.remove("active");
-  document.getElementById("page2").classList.add("active");
-
-  startGame();
-};
-
-var img = new Image();
-img.src = "./monjeuimage/bg.jpg";
-
-var backgroundImage = {
-  img: img,
-  x: 0,
-  speed: -2,
-
-  move: function() {
-    console.log('move');
-
-    this.x += this.speed;
-    this.x %= W;
-  },
-
-  draw: function() {
-    ctx.drawImage(this.img, this.x, 0);
-
-    ctx.drawImage(this.img, this.x + W, 0);
-  }
-};
-
-function clearCanvas() {
-  ctx.clearRect(0,0,W,H);
-}
-
-function updateCanvas(){
-  frames++;
-
-
-  clearCanvas();
-
-  backgroundImage.move();
-  backgroundImage.draw();
-
-  //
-  // Tracer le player
+  //Draw background, draw player
+  background.draw();
   player.draw();
 
-  //
+  //Obstacles
+  if (frames % 120 === 0) {
+    
+    //Test1 
+    //var W = canvas.width;
+    //var H = canvas.height;
 
-  //
-  // creer un nouvel obstacle (requin) toutes les 120 frames
-  function updateObstacles() {
-    frames++;
-    //if (/* je suis sur un multiple de 120e frame */) {
-      // je crée un nouvel obstacle
-    if (frames % 120 === 0) {
-      var obstacles = new Obstacles();
-      obstacles.push(obstacles);
-    }
-    // je le trace 
-    obstacles.forEach(function(obstacles)){
-      obstacles.y += 5;
-      obstacles.draw();
-    }
+    //var minGap = 200; // taille de mon image player ou mettre player.img ? (mon image)
+    //var maxGap = 900;
+    //var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+    var obstacle = new Obstacle();
+    //obstacles.push(new Obstacle(W - gap, H, 150, W + gap));
+    obstacles.push(obstacle);
   }
 
-  updateObstacles();
-  //
-   
-  window.requestAnimationFrame(updateCanvas);
+  obstacles.forEach(function(obstacle) {
+    //obstacle.y += 5; // shark tombe du haut vers le bas
+    obstacle.y -= 3; // shark qui monte du bas vers le haut
+    //obstacle.x -= 3; // obstacle.x et non .y ? si je met .x le shark glisse
+    obstacle.draw();
+  });
+}
+
+
+function animLoop() {
+  frames++;
+  draw();
+  if (!gameover) {
+    requestAnimationFrame(animLoop);
+  }
 }
 
 function startGame() {
-  // je lance la boucle d'animation
+  gameover = false;
+  //points = 0;
+  background = new Background();
   player = new Player();
-  //obstacles = new Obstacles(); est-ce qu'il y a besoin de l'ajouter ici ?
-  window.requestAnimationFrame(updateCanvas);
+  obstacles = []; 
+  requestAnimationFrame(animLoop);
+}
+
+//Evènement au clic - Affichage du canvas
+document.getElementById("start-button").onclick = function() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+  startGame();
+};
+
+
+startGame();
+
+// je fais sauter mon player 
+document.onkeydown = function(e) {
+  if (!player) return; 
+
+  console.log('keydown');
+  switch (e.keyCode) {
+    case 38:
+      player.moveHeight();
+      break;
+    case 37:
+      player.moveLeft();
+      break;
+    case 39:
+      player.moveRight();
+      break;
+  }
+
+  // En utilisant la gravité
+  //if (e.keyCode === 32) {
+  //  player.userPull = 0.3; }
+  //};
+  //document.onkeyup = function(e) {
+  //  if (e.keyCode === 32) {
+  //    player.userPull = 0;
+  //  };
 }
 

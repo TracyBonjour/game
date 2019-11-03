@@ -20,4 +20,20 @@ class Player {
 
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
     }
+
+    // faire bouger mon player
+    moveHeight() {
+      this.y -= 400; // on ne peut pas mettre obstacle.h ou obstacle.this.h ?
+    //  this.x += 200; //la width du shark obstacle.this.w ?
+    }
+
+    moveLeft() {
+      this.x += -20;
+    }
+
+    moveRight() {
+      this.x += 200;
+    }
+
+
 }
