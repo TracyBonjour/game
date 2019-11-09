@@ -6,41 +6,53 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="active" id="page1">
+    <section id="page1" class="active">
       <div class="title">
-        <img src="./monjeuimage/logo.jpg" alt="" class="logo-img" />
-        <br />
-        <button id="start-button">Start Game</button>
+        <div id="bgimage"></div>
+        <div id="logobutton">
+          <div><img src="./monjeuimage/logo.png" alt="" class="logo-img"/></div>
+          <div id="titre"><h2>hungry<br>shark</h2></div>
+          <div><img src="./monjeuimage/shark.png" alt="" class="shark-img"></div>
+          <div><button id="start-button">Start Game</button></div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- <section class="active">
-    <div>
-      <h1>Appuyez et maintenez pour sauter !</h1>
-    </div>
-  </section> -->
-
-    <div id="page2">
-      <div id="game-board">
-        <canvas id="canvas" width="1177" height="750"></canvas>
+    <section id="page2">
+      <div>
+        <div id="color-overlay"><h1 id="compteur-bg">5</h1></div>
+        <div id="consigne"><h2>Appuyez pour sauter<br> et utilisez les flèches</h2></div>
       </div>
-    </div>
+    </section>
 
-    <div>
+    <section id="page3">
+      <div><canvas id="canvas" width="1177" height="750"></canvas></div>
+      <div>
+        <kbd>←</kbd> <kbd>space</kbd> <kbd>→</kbd>
+      </div>
+    </section>
+
+    <section>
       <div id="gagné">
         <h1>Bravo !</h1>
       </div>
-    </div>
+    </section>
 
-    <div>
+    <section>
       <div id="perdu">
         <h1>Perdu !</h1>
         <button id="start-deuxieme">Essayez encore</button>
       </div>
-    </div>
+    </section>
+
     <script src="background.js"></script>
     <script src="player.js"></script>
-    <script src="obstacle.js"></script>
     <script src="monjeu.js"></script>
+    
+    <script src="pagedeux.js"></script>
+    
+    <script src="obstacle.js"></script>
+    <script src="win.js"></script>
+    
   </body>
 </html>

@@ -1,101 +1,208 @@
+//Evènement au clic - Affichage du canvas
+document.getElementById("start-button").onclick = function() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+  document.getElementById("page3").style.display = "none";
+
+  startIntro();
+
+  startGame();
+};
+
 //Déclaration des variables
 var frames = 0;
-var background; 
+var background;
 var player;
 var obstacles;
-//var gameover;
-//var points;
+const gravity = 2;
+var gameover;
+let raf;
+let points;
+
+let win;
 
 //Déclaration du Canvas
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+var ctx = document.querySelector("#page3 canvas").getContext("2d");
 
-var W = canvas.width;
-var H = canvas.height;
+var W = ctx.canvas.width;
+var H = ctx.canvas.height;
 
 //Function draw
 function draw() {
   ctx.clearRect(0, 0, W, H);
 
   //Draw background, draw player
+  background.move();
   background.draw();
-  player.draw();
+  //tracer le player
+  player.update(); // on recalcule les positions de notre player
+  player.draw(); // puis on l'affiche
 
-  //Obstacles
-  if (frames % 120 === 0) {
-    
-    //Test1 
-    //var W = canvas.width;
-    //var H = canvas.height;
-
-    //var minGap = 200; // taille de mon image player ou mettre player.img ? (mon image)
-    //var maxGap = 900;
-    //var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+  //Obstacles : creer un nouvel obstacle (requin) toutes les 120 frames
+  //if (/* je suis sur un multiple de 120e frame */) {
+  // je crée un nouvel obstacle
+  if (frames % 250 === 0) {
     var obstacle = new Obstacle();
-    //obstacles.push(new Obstacle(W - gap, H, 150, W + gap));
-    obstacles.push(obstacle);
-  }
 
+    obstacles.push(obstacle);
+    //obstacles.push(obstacle(W - gap, H, 150, W + gap));
+  }
+  // je le trace
   obstacles.forEach(function(obstacle) {
     //obstacle.y += 5; // shark tombe du haut vers le bas
-    obstacle.y -= 3; // shark qui monte du bas vers le haut
-    //obstacle.x -= 3; // obstacle.x et non .y ? si je met .x le shark glisse
+    obstacle.x -= 4;
+    if (obstacle.y >= 450) {
+      // ajustement de l'arret du shark dans sa monté
+      obstacle.y -= 4; // vitesse du shark qui glisse
+    }
     obstacle.draw();
   });
-}
 
+  obstacles.forEach(function(obstacle) {
+    if (obstacle.hits(player)) {
+      console.log("crashed");
+      gameover = true;
+      // afficher Game over sur l'écran
+      const img = document.createElement("img");
+      img.onload = () => {
+        ctx.drawImage(img, 300, 100, 600, 600);
+        //ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+        ctx.font = "60px Verdana";
+        ctx.fillStyle = "white";
+        ctx.fillText("Game Over!", 780, 400);
+        ctx.font = "28px Verdana";
+        ctx.fillText("Your final score: " + points, 720, 450);
+        //pour restart mon jeu automatiquement
+        //setTimeout(function () { // attention si je recharge pas ma page la deuxieme fois que je joue la page 2 disparait
+        //  document.getElementById("page3").style.display = 'none';
+        //  document.getElementById("page1").style.display = 'block';
+        //}, 3000);
+      };
+      img.src = "./monjeuimage/gameover2.png";
+      //img.src = "./monjeuimage/gameover1.png";
+    }
+  });
+
+  //Gagner au bout de la xeme frames
+  if (frames === 200) {
+    console.log('>500')
+    win = new Win();
+  }
+  //si il a gagné, le dessiner (ile)
+  if (win) {
+    win.draw();
+    if (win.hits(player)) {
+      win = true;
+
+      ctx.font = "60px Verdana";
+      ctx.fillStyle = "white";
+      ctx.fillText("Bravo!", 780, 400);
+      ctx.font = "28px Verdana";
+      ctx.fillText("Your final score: " + points, 720, 450);
+      
+    };
+    
+    cancelAnimationFrame(animLoop);
+  }
+
+  //le score du player
+  ctx.font = "30px Verdana";
+  ctx.textAlign = "right";
+  ctx.fillStyle = "white";
+  ctx.fillText(`${points} pts`, W - 30, 60);
+  points++;
+}
 
 function animLoop() {
   frames++;
   draw();
   if (!gameover) {
-    requestAnimationFrame(animLoop);
+    raf = requestAnimationFrame(animLoop);
   }
+
+  // if (!win) {
+  //   rafwin = requestAnimationFrame(animLoop);
+  // }
 }
 
 function startGame() {
+  if (raf) {
+    cancelAnimationFrame(raf);
+  }
+
+  // if (win) {
+  //   cancelAnimationFrame(rafwin);
+  // }
+  // win = false;
   gameover = false;
-  //points = 0;
+  points = 0;
   background = new Background();
   player = new Player();
-  obstacles = []; 
+  obstacles = [];
+
   requestAnimationFrame(animLoop);
 }
 
-//Evènement au clic - Affichage du canvas
-document.getElementById("start-button").onclick = function() {
-  document.getElementById("page1").style.display = "none";
-  document.getElementById("page2").style.display = "block";
-  startGame();
+
+// états d'enfoncement des touches
+const pressed = {
+  space: false,
+  arrowleft: false,
+  arrowright: false
 };
 
-
-startGame();
-
-// je fais sauter mon player 
+// je fais sauter mon player
 document.onkeydown = function(e) {
-  if (!player) return; 
+  if (!player) return;
 
-  console.log('keydown');
+  //console.log('keydown');
   switch (e.keyCode) {
-    case 38:
-      player.moveHeight();
+    //SPACE
+    case 32:
+      if (pressed.space) return; // STOP si touche déja enfoncée
+      pressed.up = true;
+
+      player.jump(); // jump mario 🦘
       break;
+    // LEFT
     case 37:
-      player.moveLeft();
+      if (pressed.arrowleft) return; // STOP si touche déja enfoncée
+      pressed.arrowleft = true;
+
+      player.backward(); // GO back
       break;
+    // RIGHT
     case 39:
-      player.moveRight();
+      if (pressed.arrowright) return; // STOP si touche déja enfoncée
+      pressed.right = true;
+
+      player.forward(); // GO ahead player
       break;
   }
+};
 
-  // En utilisant la gravité
-  //if (e.keyCode === 32) {
-  //  player.userPull = 0.3; }
-  //};
-  //document.onkeyup = function(e) {
-  //  if (e.keyCode === 32) {
-  //    player.userPull = 0;
-  //  };
-}
+document.onkeyup = function(e) {
+  switch (e.keyCode) {
+    // SPACE
+    case 38:
+      // on "libère" l'etat d'enfoncement de la touche
+      pressed.space = false;
+      break;
+    // ARROWLEFT
+    case 37:
+      // on "libère" l'etat d'enfoncement de la touche
+      pressed.arrowleft = false;
 
+      // on annule la vitesse horizontale
+      player.vx = 0;
+      break;
+    // ARROWRIGHT
+    case 39:
+      // on "libère" l'etat d'enfoncement de la touche
+      pressed.arrowright = false;
+
+      // on annule la vitesse horizontale
+      player.vx = 0;
+      break;
+  }
+};

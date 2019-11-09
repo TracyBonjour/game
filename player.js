@@ -6,13 +6,43 @@ class Player {
   
         const imgRatio = img.naturalWidth/img.naturalHeight;
 
-        this.w = 300;
-        this.h = this.w/imgRatio; // use ratio to compute `carHeight`
+        this.w = 150;
+        this.h = this.w/imgRatio; // use ratio to compute `playerHeight`
   
-        this.x = W/3-this.w/1;
-        this.y = H-this.h-100;
+        this.x = 50;
+        this.y = H-this.h-200; // position du player sur la hauteur
+
+        this.vx = 0; // vitesse horizontale
+        this.vy = 0; // vitesse verticale
+
       }
       img.src = "./monjeuimage/player.png";
+    }
+
+    jump() {
+      this.vy = -35;
+    }
+
+    forward() {
+      this.vx = 10;
+    }
+
+    backward() {
+      this.vx = -10;
+    }
+
+    update() {
+      // on met a jour la position via les vitesses
+      this.x += this.vx;
+      this.y += this.vy;
+  
+      // on empeche d'aller plus bas que la position de départ souhaité
+
+      let ysol = H - this.h - 250;
+      if (this.y > ysol) this.y = ysol; 
+
+      // la gravité s'applique
+      this.vy += gravity;
     }
 
     draw() {
@@ -20,20 +50,5 @@ class Player {
 
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
     }
-
-    // faire bouger mon player
-    moveHeight() {
-      this.y -= 400; // on ne peut pas mettre obstacle.h ou obstacle.this.h ?
-    //  this.x += 200; //la width du shark obstacle.this.w ?
-    }
-
-    moveLeft() {
-      this.x += -20;
-    }
-
-    moveRight() {
-      this.x += 200;
-    }
-
 
 }
