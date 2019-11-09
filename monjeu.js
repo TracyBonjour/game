@@ -16,10 +16,12 @@ var player;
 var obstacles;
 const gravity = 2;
 var gameover;
+let victory;
 let raf;
 let points;
-
 let win;
+
+
 
 //Déclaration du Canvas
 var ctx = document.querySelector("#page3 canvas").getContext("2d");
@@ -41,7 +43,7 @@ function draw() {
   //Obstacles : creer un nouvel obstacle (requin) toutes les 120 frames
   //if (/* je suis sur un multiple de 120e frame */) {
   // je crée un nouvel obstacle
-  if (frames % 250 === 0) {
+  if (frames % 150 === 0) {
     var obstacle = new Obstacle();
 
     obstacles.push(obstacle);
@@ -72,37 +74,52 @@ function draw() {
         ctx.fillText("Game Over!", 780, 400);
         ctx.font = "28px Verdana";
         ctx.fillText("Your final score: " + points, 720, 450);
+        
         //pour restart mon jeu automatiquement
-        //setTimeout(function () { // attention si je recharge pas ma page la deuxieme fois que je joue la page 2 disparait
-        //  document.getElementById("page3").style.display = 'none';
-        //  document.getElementById("page1").style.display = 'block';
-        //}, 3000);
+        setTimeout(function () { // attention si je recharge pas ma page la deuxieme fois que je joue la page 2 disparait
+          document.getElementById("page3").style.display = 'none';
+          document.getElementById("page1").style.display = 'block';
+        }, 3000);
       };
       img.src = "./monjeuimage/gameover2.png";
       //img.src = "./monjeuimage/gameover1.png";
+
+      const audio = document.createElement("audio");
+      audio.onload = () => {
+        this.audio = audio;
+      };
+      audio.src = "./audio/smartsound_HUMAN_VOCAL_Male_Scream_Deep_Pain_04.mp3";
+
+      audio.play();
+      
     }
   });
 
-  //Gagner au bout de la xeme frames
-  if (frames === 200) {
+  //Gagner au bout de la 3000 eme frames
+  if (frames === 3000) {
     console.log('>500')
     win = new Win();
   }
   //si il a gagné, le dessiner (ile)
   if (win) {
     win.draw();
+    
     if (win.hits(player)) {
-      win = true;
+      victory = true;
 
-      ctx.font = "60px Verdana";
+      ctx.font = "50px Verdana";
       ctx.fillStyle = "white";
-      ctx.fillText("Bravo!", 780, 400);
-      ctx.font = "28px Verdana";
-      ctx.fillText("Your final score: " + points, 720, 450);
+      ctx.fillText("Bienvenue au paradis!", 730, 350);
+      const audio = document.createElement("audio");
+      audio.onload = () => {
+        this.audio = audio;
+      };
+      audio.src = "./audio/little_robot_sound_factory_Jingle_Win_Synth_05.mp3";
+
+      audio.play();
       
     };
     
-    cancelAnimationFrame(animLoop);
   }
 
   //le score du player
@@ -116,24 +133,14 @@ function draw() {
 function animLoop() {
   frames++;
   draw();
-  if (!gameover) {
-    raf = requestAnimationFrame(animLoop);
-  }
 
-  // if (!win) {
-  //   rafwin = requestAnimationFrame(animLoop);
-  // }
+  if (!victory && !gameover) {
+    requestAnimationFrame(animLoop);
+  }
 }
 
 function startGame() {
-  if (raf) {
-    cancelAnimationFrame(raf);
-  }
-
-  // if (win) {
-  //   cancelAnimationFrame(rafwin);
-  // }
-  // win = false;
+  victory = false;
   gameover = false;
   points = 0;
   background = new Background();
@@ -162,7 +169,7 @@ document.onkeydown = function(e) {
       if (pressed.space) return; // STOP si touche déja enfoncée
       pressed.up = true;
 
-      player.jump(); // jump mario 🦘
+      player.jump(); // jump player 🦘
       break;
     // LEFT
     case 37:

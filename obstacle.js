@@ -14,7 +14,7 @@ class Obstacle {
         this.h = this.w / imgRatio; // dimension pour ne pas déformer l'image
 
         //this.x = random(1200, 300);
-        this.x = random(1200, 500);
+        this.x = random(1300, 500);
         this.y = H;//sort depuis le bas de la page
         //this.y = H - this.h;// option apparait d'un coup
         

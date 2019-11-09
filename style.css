@@ -34,7 +34,7 @@ section.active {
 #start-button {
   position: absolute;
   top: 470px;
-  left: 855px;
+  left: 850px;
 }
 
 .logo-img {
@@ -86,6 +86,10 @@ body h2 {
   text-transform: uppercase;
 }
 
+body {
+  margin: 0;
+}
+
 /* +-+-+-+-+ +-+
  |P|A|G|E| |2|
  +-+-+-+-+ +-+*/
@@ -116,14 +120,16 @@ color: #fff;
 #consigne {
   position: absolute;
   top: 540px;
-  left: 403px;
+  left: 480px;
   color:white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  /*font-weight: lighter;*/
+  line-height: 380%;
   /*text-align: center;*/
 }
 
 #consigne h2 {
-  font-size: 50px;
+  font-size: 40px;
   text-align: center;
   text-transform: none; /*pas en maj à voir par la suite*/
 }
@@ -141,19 +147,25 @@ font-family: Verdana;
 
 #page3 {
   /*background-size: cover; /*zoom taille de la page?*/
-  display: flex;
+  display: block;
+  width: 100vw;
+  height: 100vh;
   justify-content: center; 
   align-items: center; 
   position: relative;
 }
 
 #page3 canvas {
-  position: absolute;
-  left:0;
+  display:flex;
+  width: 100vw;
+  height: 100vh;
+  widows: 100%;
+  margin: auto;
+  /*left:0;
   top:0;
   width:85%;
   margin:auto;
-  object-fit: cover;
+  object-fit: cover;*/
 }
 
 kbd {

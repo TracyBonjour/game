@@ -21,6 +21,13 @@ class Player {
 
     jump() {
       this.vy = -35;
+      const audio = document.createElement("audio");
+      audio.onload = () => {
+        this.audio = audio;
+      };
+      audio.src = "./audio/zapsplat_sport_child_swimmer_jump_into_pool_002_16290.mp3";
+
+      audio.play();
     }
 
     forward() {
