@@ -7,7 +7,7 @@ class Player {
         const imgRatio = img.naturalWidth/img.naturalHeight;
 
         this.w = 150;
-        this.h = this.w/imgRatio; // use ratio to compute `playerHeight`
+        this.h = this.w/imgRatio; //utiliser le ratio pour calculer `playerHeight`
   
         this.x = 50;
         this.y = H-this.h-200; // position du player sur la hauteur
@@ -18,7 +18,7 @@ class Player {
       }
       img.src = "./monjeuimage/player.png";
     }
-
+    //function jump du player + ajout de l'audio
     jump() {
       this.vy = -35;
       const audio = document.createElement("audio");
@@ -29,11 +29,11 @@ class Player {
 
       audio.play();
     }
-
+    //function vers l'avant
     forward() {
       this.vx = 10;
     }
-
+    //function vers l'arrière
     backward() {
       this.vx = -10;
     }

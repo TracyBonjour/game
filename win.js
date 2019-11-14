@@ -7,7 +7,7 @@ class Win {
       const imgRatio = img.naturalWidth / img.naturalHeight;
 
       this.w = 300;
-      this.h = this.w / imgRatio; // use ratio to compute `ileHeight`
+      this.h = this.w / imgRatio; //utiliser le ratio pour calculer `ileHeight`
 
       this.x = W - this.w;
       this.y = H - this.h - 200; // position de l'île sur la hauteur
@@ -16,13 +16,13 @@ class Win {
     };
     img.src = "./monjeuimage/ile.png";
   }
-
+  //function dessiner l'île
   draw() {
     if (!this.img) return;
 
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
-
+  //function collision 
   hits(player) {
     return (
       player.x + player.w >= this.x &&
