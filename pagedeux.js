@@ -1,15 +1,15 @@
 function startIntro() {
-    // Generates a random color in hexadecimal (ie. #62b9cc)
+    // Génère une couleur aléatoire en hexadécimal (c'est-à-dire # 62b9cc)
   function generateRandomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
   }
   
-  // Changes the color of the background using STYLE
+  // Changer la couleur du fond en utilisant STYLE
   function changeBackgroundColor() {
    var colorBg = document.getElementById("color-overlay")
    colorBg.style.backgroundColor = generateRandomColor();
   }
-  
+  // Chnager le texte du fond
   function changeBackgroundText() {
     var textBg = document.getElementById("compteur-bg")
     if (textBg.innerHTML == "5") {
@@ -23,16 +23,16 @@ function startIntro() {
     } else if (textBg.innerHTML == "1") { 
     textBg.innerHTML = "Let's GO !"
     } else if (textBg.innerHTML == "Let's GO !") {
-    document.getElementById("page2").style.display = "none";
-    document.getElementById("page3").style.display = "block";
+    document.getElementById("page2").style.display = "none";//ne plus afficher la page2
+    document.getElementById("page3").style.display = "block";//afficher la page3
     };
   }
-  
+  // fonction changement de texte et de couleur aléatoire
   function changeBackground() {
     changeBackgroundColor();
     changeBackgroundText();
   }
   
-  // Run this function every xxxms
+  // Executer cette fonction ci-dessus toutes les 600
   setInterval(changeBackground, 600);
  }

@@ -1,7 +1,8 @@
+// Génère mes obstacles (shark) aléatoirement entre deux positions sur le canvas
 function random(from, to) {
    return Math.floor(from + Math.random()*(to - from));
 }
-
+// créer mes obstacles (shark), position et téléchargement de l'image
 class Obstacle {
     constructor() {
       const img = document.createElement("img");
@@ -26,12 +27,14 @@ class Obstacle {
       };
       img.src = "./monjeuimage/shark2.png";
     }
-  
+
+    // dessiner mon obstacle
     draw() {
       if (!this.img)return;
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
     }
 
+    // function si l'obstacle touche le player
     hits(player) {
       return (
         (player.x+player.w >= this.x && player.x <= this.x+this.w) 
