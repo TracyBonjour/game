@@ -5,7 +5,7 @@ Voici le lien de mon premier jeu Hungry Shark : https://tracybonjour.github.io/g
 
 ## Langages web utilisés
 
- - JavaScript (DOM manipulation && HTML canvas)
+ - JavaScript (DOM manipulation & HTML canvas)
  - HTML
  - CSS
 
